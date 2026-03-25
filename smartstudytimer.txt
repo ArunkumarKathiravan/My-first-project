@@ -1,0 +1,45 @@
+import time
+import os
+
+# Settings (in minutes)
+STUDY_TIME = 25
+BREAK_TIME = 5
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+def countdown(minutes, session_type):
+    total_seconds = minutes * 60
+
+    while total_seconds:
+        mins, secs = divmod(total_seconds, 60)
+        timer = f"{mins:02d}:{secs:02d}"
+        print(f"\r⏳ {session_type} Time Left: {timer}", end="")
+        time.sleep(1)
+        total_seconds -= 1
+
+    print(f"\n✔ {session_type} session completed!")
+
+def start_timer():
+    session_count = 0
+
+    while True:
+        choice = input("\nStart Study Session? (y/n): ").lower()
+
+        if choice != 'y':
+            print("👋 Exiting... Stay productive!")
+            break
+
+        clear_screen()
+        print("📚 Study session started!")
+        countdown(STUDY_TIME, "Study")
+
+        print("\n🔔 Time for a break!")
+        countdown(BREAK_TIME, "Break")
+
+        session_count += 1
+        print(f"\n📊 Sessions completed: {session_count}")
+
+if __name__ == "__main__":
+    print("===== SMART STUDY TIMER =====")
+    start_timer()
